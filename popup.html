@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeskHaven</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+  <header class="top">
+    <div class="brand-lockup">
+      <img src="deskhaven.jpg" alt="" class="brand-logo">
+      <h1 data-i18n="appName">DeskHaven</h1>
+    </div>
+    <span id="clock" class="clock" aria-hidden="true"></span>
+  </header>
+
+  <div id="tabs" role="tablist" data-i18n-aria="tabsLabel" aria-label="Sections">
+    <button role="tab" id="tab-radio" data-tab="radio" aria-controls="panel-radio" aria-selected="true"><span aria-hidden="true" class="ico">📻</span><span data-i18n="tabRadio">Radio</span></button>
+    <button role="tab" id="tab-weather" data-tab="weather" aria-controls="panel-weather" aria-selected="false" tabindex="-1"><span aria-hidden="true" class="ico">⛅</span><span data-i18n="tabWeather">Weather</span></button>
+    <button role="tab" id="tab-alarm" data-tab="alarm" aria-controls="panel-alarm" aria-selected="false" tabindex="-1"><span aria-hidden="true" class="ico">⏰</span><span data-i18n="tabAlarm">Alarms</span></button>
+    <button role="tab" id="tab-prayer" data-tab="prayer" aria-controls="panel-prayer" aria-selected="false" tabindex="-1"><span aria-hidden="true" class="ico">🕌</span><span data-i18n="tabPrayer">Prayer</span></button>
+    <button role="tab" id="tab-more" data-tab="more" aria-controls="panel-more" aria-selected="false" tabindex="-1"><span aria-hidden="true" class="ico">⚙️</span><span data-i18n="tabMore">More</span></button>
+  </div>
+
+  <main id="main">
+
+    <!-- RADIO -->
+    <section role="tabpanel" id="panel-radio" aria-labelledby="tab-radio" tabindex="0">
+      <div class="player">
+        <div class="deck-art" aria-hidden="true">
+          <span class="deck-ring"></span>
+          <div class="eq" id="eq">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <p id="np-station" class="np-title"></p>
+        <p id="np-status" class="np-sub"></p>
+        <p id="np-track" class="np-track"></p>
+        <div class="controls">
+          <button id="btn-prev" class="round"><span aria-hidden="true" class="flip">⏮</span></button>
+          <button id="btn-play" class="round primary big"><span id="play-ico" aria-hidden="true">▶</span></button>
+          <button id="btn-next" class="round"><span aria-hidden="true" class="flip">⏭</span></button>
+        </div>
+        <div class="field">
+          <label for="vol" data-i18n="volume">Volume</label>
+          <input type="range" id="vol" min="0" max="100" step="5">
+        </div>
+        <div class="field">
+          <label for="sleep-sel" data-i18n="sleepTimer">Sleep timer</label>
+          <select id="sleep-sel"></select>
+        </div>
+        <p id="sleep-info" class="muted"></p>
+      </div>
+
+      <h2 data-i18n="favorites">Favorites</h2>
+      <ul id="fav-list" class="stations"></ul>
+      <p id="fav-empty" class="muted" data-i18n="noFavorites"></p>
+
+      <div class="row between">
+        <h2 data-i18n="allStations">All stations</h2>
+        <button id="stations-refresh" class="ghost small-btn" data-i18n="stationsRefresh">Refresh station directory</button>
+      </div>
+      <p id="stations-status" class="muted small"></p>
+      <ul id="station-list" class="stations"></ul>
+
+      <details id="finder">
+        <summary data-i18n="findStations">Find or add stations</summary>
+        <form id="find-form" class="row">
+          <label for="find-q" class="sr-only" data-i18n="searchStations">Search</label>
+          <input id="find-q" type="search" data-i18n-ph="searchStations">
+          <button type="submit" data-i18n="search">Search</button>
+        </form>
+        <p id="find-status" class="muted" role="status"></p>
+        <ul id="find-results" class="stations"></ul>
+
+        <h3 data-i18n="customHeading">Add a station by address</h3>
+        <form id="custom-form" class="stack">
+          <div class="field col">
+            <label for="cs-name" data-i18n="customName">Station name</label>
+            <input id="cs-name" type="text" required>
+          </div>
+          <div class="field col">
+            <label for="cs-url" data-i18n="customUrl">Stream address</label>
+            <input id="cs-url" type="url" dir="ltr" required placeholder="https://">
+          </div>
+          <button type="submit" data-i18n="addCustom">Add station</button>
+        </form>
+      </details>
+
+      <div class="check">
+        <input type="checkbox" id="np-toggle">
+        <label for="np-toggle" data-i18n="trackInfo">Show the track title</label>
+      </div>
+    </section>
+
+    <!-- WEATHER -->
+    <section role="tabpanel" id="panel-weather" aria-labelledby="tab-weather" tabindex="0" hidden>
+      <div class="row">
+        <div class="field grow">
+          <label for="gov" data-i18n="governorate">Governorate</label>
+          <select id="gov"></select>
+        </div>
+        <button id="btn-detect" data-i18n="detect">Use my location</button>
+      </div>
+
+      <div id="wx-alerts" role="region" aria-labelledby="wx-alerts-h"></div>
+      <div id="wx-body"></div>
+      <div class="row between">
+        <p id="wx-updated" class="muted"></p>
+        <button id="wx-refresh" data-i18n="refresh">Refresh weather</button>
+      </div>
+    </section>
+
+    <!-- ALARMS -->
+    <section role="tabpanel" id="panel-alarm" aria-labelledby="tab-alarm" tabindex="0" hidden>
+      <div class="row between">
+        <h2 data-i18n="alarms">Alarms</h2>
+        <button id="btn-add-alarm" class="primary" data-i18n="addAlarm">Add alarm</button>
+      </div>
+      <p id="alarm-next" class="muted"></p>
+      <ul id="alarm-list" class="cards"></ul>
+      <p id="alarm-empty" class="muted" data-i18n="noAlarms"></p>
+
+      <h2 data-i18n="timers">Timers</h2>
+      <form id="timer-form" class="row">
+        <div class="field grow">
+          <label for="timer-min" data-i18n="timerMinutes">Minutes</label>
+          <input id="timer-min" type="number" min="1" max="999" value="10" inputmode="numeric">
+        </div>
+        <button type="submit" class="primary" data-i18n="startTimer">Start timer</button>
+      </form>
+      <div class="chips" id="timer-presets"></div>
+      <ul id="timer-list" class="cards"></ul>
+      <p id="timer-empty" class="muted" data-i18n="noTimers"></p>
+
+      <h2 data-i18n="pomodoro">Pomodoro</h2>
+      <p id="pomo-status" class="muted"></p>
+      <div class="row">
+        <button id="pomo-start" class="primary" data-i18n="pomoStart">Start focus session</button>
+        <button id="pomo-stop" data-i18n="pomoStop">Stop Pomodoro</button>
+      </div>
+
+      <dialog id="alarm-dialog" aria-labelledby="alarm-dialog-title">
+        <form id="alarm-form" method="dialog" class="stack">
+          <h2 id="alarm-dialog-title"></h2>
+          <div class="field col">
+            <label for="al-time" data-i18n="alarmTime">Time</label>
+            <input id="al-time" type="time" required>
+          </div>
+          <div class="field col">
+            <label for="al-label" data-i18n="alarmLabel">Name</label>
+            <input id="al-label" type="text" maxlength="40">
+          </div>
+          <div class="field col">
+            <label for="al-kind" data-i18n="alarmType">Type</label>
+            <select id="al-kind">
+              <option value="time" data-i18n="typeTime">At a set time</option>
+              <option value="suhoor" data-i18n="typeSuhoor">Suhoor</option>
+            </select>
+          </div>
+          <div class="field col" id="al-offset-wrap" hidden>
+            <label for="al-offset" data-i18n="offsetBefore">Minutes before Fajr</label>
+            <input id="al-offset" type="number" min="0" max="180" value="30" inputmode="numeric">
+          </div>
+          <fieldset id="al-days-wrap">
+            <legend data-i18n="repeat">Repeat on</legend>
+            <div id="al-days" class="chips"></div>
+            <p class="muted small" data-i18n="repeatNone"></p>
+          </fieldset>
+          <div class="field col">
+            <label for="al-sound" data-i18n="sound">Sound</label>
+            <select id="al-sound">
+              <option value="beep" data-i18n="soundBeep">Beep</option>
+              <option value="radio" data-i18n="soundRadio">Radio station</option>
+            </select>
+          </div>
+          <div class="field col" id="al-station-wrap" hidden>
+            <label for="al-station" data-i18n="alarmStation">Station</label>
+            <select id="al-station"></select>
+          </div>
+          <div class="check"><input type="checkbox" id="al-gradual"><label for="al-gradual" data-i18n="gradual"></label></div>
+          <div class="check"><input type="checkbox" id="al-challenge"><label for="al-challenge" data-i18n="challenge"></label></div>
+          <div class="check"><input type="checkbox" id="al-weather"><label for="al-weather" data-i18n="weatherMsg"></label></div>
+          <div class="field col">
+            <label for="al-snooze" data-i18n="snoozeMin">Snooze length</label>
+            <input id="al-snooze" type="number" min="1" max="60" value="9" inputmode="numeric">
+          </div>
+          <div class="row end">
+            <button type="button" id="al-delete" class="danger" data-i18n="delete">Delete</button>
+            <button type="button" id="al-cancel" data-i18n="cancel">Cancel</button>
+            <button type="submit" id="al-save" class="primary" data-i18n="save">Save</button>
+          </div>
+        </form>
+      </dialog>
+    </section>
+
+    <!-- PRAYER -->
+    <section role="tabpanel" id="panel-prayer" aria-labelledby="tab-prayer" tabindex="0" hidden>
+      <h2 data-i18n="prayerTitle">Prayer times</h2>
+      <p id="pr-hijri" class="muted"></p>
+      <div id="pr-ramadan" hidden></div>
+      <div class="ring-wrap">
+        <svg class="prayer-ring" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+          <circle class="ring-progress" id="pr-ring" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <p id="pr-next" class="next ring-label"></p>
+      </div>
+      <ul id="pr-list" class="cards times"></ul>
+      <p id="pr-error" class="error" role="alert"></p>
+      <div class="check"><input type="checkbox" id="pr-notify"><label for="pr-notify" data-i18n="notifyPrayer"></label></div>
+      <div class="check"><input type="checkbox" id="pr-pause"><label for="pr-pause" data-i18n="pauseAtPrayer"></label></div>
+      <p class="muted small" data-i18n="prayerNote"></p>
+    </section>
+
+    <!-- MORE -->
+    <section role="tabpanel" id="panel-more" aria-labelledby="tab-more" tabindex="0" hidden>
+      <div class="field col">
+        <label for="set-lang" data-i18n="moreLanguage">Language</label>
+        <select id="set-lang"></select>
+      </div>
+      <div class="field col">
+        <label for="set-theme" data-i18n="moreTheme">Theme</label>
+        <select id="set-theme"></select>
+      </div>
+      <div class="check"><input type="checkbox" id="set-badge"><label for="set-badge" data-i18n="badge"></label></div>
+      <div class="check"><input type="checkbox" id="set-alerts"><label for="set-alerts" data-i18n="notifyAlerts"></label></div>
+
+      <h2 data-i18n="adhanTitle">Adhan</h2>
+      <p class="muted small" data-i18n="adhanBuiltIn">One built-in Adhan plays automatically with prayer notifications. No setup or internet connection is needed.</p>
+      <div class="row">
+        <button id="btn-adhan-preview" type="button" class="primary" data-i18n="adhanPreview">Play built-in Adhan</button>
+        <button id="btn-adhan-stop" type="button" data-i18n="adhanStop">Stop Adhan</button>
+      </div>
+
+      <h2 data-i18n="rates">Tunisian dinar exchange rates</h2>
+      <div id="conv-form" class="row">
+        <div class="field grow">
+          <label for="conv-amount" data-i18n="amount">Amount</label>
+          <input id="conv-amount" type="number" min="0" step="any" value="100" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="conv-cur" data-i18n="currency">Currency</label>
+          <select id="conv-cur"></select>
+        </div>
+      </div>
+      <p id="conv-out" class="conv" role="status"></p>
+      <ul id="rate-list" class="cards rates"></ul>
+      <p id="rate-updated" class="muted"></p>
+      <p id="rate-error" class="error" role="alert"></p>
+
+      <h2 data-i18n="shortcuts">Keyboard shortcuts</h2>
+      <p data-i18n="shortcutsHelp"></p>
+      <button id="btn-shortcuts" data-i18n="openShortcuts">Change shortcuts in Chrome</button>
+    </section>
+  </main>
+
+  <div id="live" class="sr-only" role="status" aria-live="polite"></div>
+  <div id="live-alert" class="sr-only" role="alert"></div>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

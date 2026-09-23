@@ -1,0 +1,63 @@
+{
+  "manifest_version": 3,
+  "name": "DeskHaven — Radio, Weather & Alarms",
+  "short_name": "DeskHaven",
+  "version": "1.1.0",
+  "description": "Tunisian radio, weather for all 24 governorates, alarms, prayer times with a built-in Adhan, Ramadan mode and more. Arabic, French and English.",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications",
+    "offscreen",
+    "contextMenus",
+    "geolocation"
+  ],
+  "host_permissions": [
+    "https://api.open-meteo.com/*",
+    "https://air-quality-api.open-meteo.com/*",
+    "https://marine-api.open-meteo.com/*",
+    "https://api.aladhan.com/*",
+    "https://open.er-api.com/*",
+    "https://*.api.radio-browser.info/*"
+  ],
+  "optional_host_permissions": ["*://*/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "DeskHaven",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": { "default": "Alt+Shift+R" },
+      "description": "Open DeskHaven"
+    },
+    "toggle-radio": {
+      "suggested_key": { "default": "Alt+Shift+P" },
+      "description": "Play or pause the radio"
+    },
+    "next-station": {
+      "suggested_key": { "default": "Alt+Shift+N" },
+      "description": "Next radio station"
+    },
+    "prev-station": {
+      "suggested_key": { "default": "Alt+Shift+B" },
+      "description": "Previous radio station"
+    }
+  }
+}
