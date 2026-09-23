@@ -3,7 +3,7 @@
 ## Install (developer mode)
 1. Unzip this folder.
 2. Open `chrome://extensions`, turn on **Developer mode**.
-3. Click **Load unpacked** and pick the `tunisia-hub` folder.
+3. Click **Load unpacked** and pick the `DeskHaven` folder.
 4. Pin the extension. Open it with **Alt+Shift+R**.
 
 ## Keyboard
@@ -25,5 +25,5 @@ Radio (favorites, sleep timer with fade-out, background playback, fallback strea
 - Alarms only fire while Chrome is running (an alarm missed while Chrome was closed rings when it starts).
 - Prayer times use Aladhan's Tunisia method. Ramadan mode follows the calculated calendar, which can differ by one day from the official announcement.
 - Track titles need an extra permission that is requested only when you turn that option on.
-- Built-in audio: `sounds/adhan.ogg`, “Adhan.ogg” by Aishatu98, dedicated to the public domain under CC0 1.0. Source: https://commons.wikimedia.org/wiki/File:Adhan.ogg
+- Built-in audio: `sounds/adhan.ogg`.
 - Data sources: Open-Meteo (weather, air, sea), Aladhan (prayer), open.er-api.com (rates), Radio Browser (station search).
